@@ -10,10 +10,9 @@ class HomeController
 {
 //Création de la route pour méthode home
     #[Route('/', 'home')]
-
 //Création méthode home
     public function home()
     {
-        return new Response('<h1>Page accueil trop cool !</h1>');
+        return $this->render('home.html.twig');
     }
 }

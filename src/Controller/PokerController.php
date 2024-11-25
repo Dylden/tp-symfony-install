@@ -16,7 +16,7 @@ class PokerController{
         $age = $request->query->get('age');
 
 
-        if($age >=18){
+        if($age>=18){
             return new Response('Bienvenue sur le site de Poker');
 
         } else {
