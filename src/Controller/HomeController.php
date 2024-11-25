@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 //Classe HomeController
-class HomeController
+class HomeController extends AbstractController
 {
 //Création de la route pour méthode home
     #[Route('/', 'home')]
