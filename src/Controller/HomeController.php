@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
 //Création de la route pour méthode home
-    #[Route('/', 'home')]
+    #[Route('/home', 'home')]
 //Création méthode home
     public function home()
     {
