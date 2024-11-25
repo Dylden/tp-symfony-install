@@ -15,8 +15,14 @@ class PokerController{
         $request = Request::createFromGlobals();
         $age = $request->query->get('age');
 
-        var_dump($age); die;
 
-        return new Response('Bienvenue sur le site de Poker');
+        if($age >=18){
+            return new Response('Bienvenue sur le site de Poker');
+
+        } else {
+            return new Response('Pas bienvenue sur le site de Poker');
+
+        }
+
     }
 }
