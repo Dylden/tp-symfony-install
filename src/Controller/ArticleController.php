@@ -52,8 +52,9 @@ class ArticleController extends AbstractController{
         ]);
     }
 
-    #[Route('/article','article_show')]
-    public function showArticle(){
+    //Quand je met le numéro de l'id dans l'url, ça m'affiche l'article correspondant.
+    #[Route('/article/{id}','article_show')]
+    public function showArticle($id){
 
         //Tableau d'articles
         $articles = [
@@ -90,11 +91,7 @@ class ArticleController extends AbstractController{
 
         ];
 
-        //Je créé une requête avec une une méthode statique "createFromGlobals"
-        $request = Request::createFromGlobals();
 
-        //Je créé une variable "id" pour récupérer ses données avec GET
-        $id = $request->query->get('id');
 
 
         //Je créé une variable me permettant de stocker la valeur de l'id de l'article
