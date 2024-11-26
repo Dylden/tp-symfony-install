@@ -1,0 +1,25 @@
+{% include "partials/_header.html.twig" %}
+
+<main>
+
+    <h2>Sélectionner un article</h2>
+    <section class="articles-container">
+
+    {% if article %}
+
+        <article class="article-container">
+
+        <p>{{ article.title }}</p>
+        <p>{{ article.content }}</p>
+
+    {% else %}
+
+        <p>Aucun article trouvé</p>
+        </article>
+    {% endif %}
+    </section>
+
+</main>
+
+
+{% include "partials/_footer.html.twig" %}

@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: cornflowerblue;
+}
+
+header{
+    display: flex;
+    align-items: end;
+    background-color: royalblue;
+    height: 80vh;
+    background-image: url("img/fond_d_ecran_chat_et_licorne.webp");
+    background-size: cover;
+    margin-bottom: 30px;
+}
+
+nav{
+    background-color: goldenrod;
+    width: 100%;
+}
+
+ul{
+    display: flex;
+    justify-content: space-evenly;
+    list-style-type: none;
+
+}
+
+a{
+    text-decoration: none;
+    font-size: 40px;
+    color: deeppink;
+    font-style: italic;
+}
+
+a:hover{
+    color: pink;
+}
+
+
+
+.articles-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.article-container {
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    border: 2px solid orange;
+
+}
+
+footer{
+    text-align: center;
+}

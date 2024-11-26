@@ -12,11 +12,22 @@
 <body>
 <main>
 
-{% for article in articles  %}
+    <h1>Liste d'articles</h1>
 
-    <p>{{ article.title }}</p>
+<section class="articles-container">
+    {% for article in articles  %}
 
-{% endfor %}
+        <article class="article-container">
+            <p>{{ article.title }}</p>
+            <p>{{ article.content }}</p>
+
+
+        </article>
+
+    {% endfor %}
+</section>
+
+
 
 </main>
 
