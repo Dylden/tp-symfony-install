@@ -1,37 +1,26 @@
-{% include "partials/_header.html.twig" %}
+{% extends "base.html.twig" %}
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<main>
+{% block metatitle %}
+    Liste d'articles | Site trop cool
+{% endblock metatitle %}
 
+
+{% block main %}
     <h1>Liste d'articles</h1>
 
-<section class="articles-container">
-    {% for article in articles  %}
+    <section class="articles-container">
+        {% for article in articles %}
 
-        <article class="article-container">
-            <p>{{ article.title }}</p>
-            <p>{{ article.content }}</p>
-
-
-        </article>
-
-    {% endfor %}
-</section>
+            <article class="article-container">
+                <p>{{ article.title }}</p>
+                <p>{{ article.content }}</p>
+                <div><img src="https://static.vecteezy.com/system/resources/thumbnails/012/176/986/small_2x/a-3d-rendering-image-of-grassed-hill-nature-scenery-png.png"></div>
+            <a href="{{ path('article_show', {id: article.id}) }}">Voir l'article</a>
 
 
+            </article>
 
-</main>
+        {% endfor %}
+    </section>
 
-{%  include "partials/_footer.html.twig" %}
-
-</body>
-</html>
+{% endblock main %}

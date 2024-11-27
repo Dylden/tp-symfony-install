@@ -5,29 +5,73 @@
 }
 
 body {
-    background-color: cornflowerblue;
+    background: linear-gradient(90deg, royalblue, greenyellow, orange);
+    scroll-behavior: smooth;
+}
+
+#searchBox{
+    border: 5px solid greenyellow;
+    border-radius: 10px;
+    width: 300px;
+    transition: 0.5s;
+}
+
+#searchBox:hover{
+    background-color: greenyellow;
+    border: 10px solid red;
+    transition: 0.5s;
+}
+
+#searchButton{
+    background-color: yellow;
+    padding: 5px;
+    border: 2px solid blue;
+    border-radius: 10px;
+    transition: 0.5s;
+}
+
+#searchButton:hover{
+    background-color: yellowgreen;
+    border: 10px solid royalblue;
+    transition: 0.5s;
 }
 
 header{
     display: flex;
     align-items: end;
     background-color: royalblue;
-    height: 80vh;
+    height: 100vh;
     background-image: url("img/fond_d_ecran_chat_et_licorne.webp");
     background-size: cover;
     margin-bottom: 30px;
+    background-attachment: fixed;
 }
 
 nav{
-    background-color: goldenrod;
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, purple);
+    background-size: 200% 100%;
     width: 100%;
+    border: 2px solid greenyellow;
+    animation: rainbow 10s linear infinite;
+}
+
+@keyframes rainbow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 ul{
     display: flex;
     justify-content: space-evenly;
     list-style-type: none;
-
+    align-items: center;
 }
 
 a{
@@ -41,21 +85,21 @@ a:hover{
     color: pink;
 }
 
-
-
 .articles-container {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
+    flex-wrap: wrap;
 
 }
 
 .article-container {
     text-align: center;
+    width: 25%;
     color: white;
     font-size: 40px;
     border: 2px solid orange;
-
+    background: linear-gradient(180deg, royalblue, darkred, coral, yellowgreen, violet);
+    overflow-x: hidden;
 }
 
 footer{

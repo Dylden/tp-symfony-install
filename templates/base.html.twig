@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Coucou</title>
+    <title>{% block metatitle %}{% endblock metatitle %}</title>
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
 </head>
 <body>
@@ -13,11 +13,30 @@
     <nav>
         <ul>
             <li><a href="{{ path('home') }}">Accueil</a></li>
+            <li>
+                <form method="get" action="{{ path('article_search_results') }}">
+                    <input type="text" name="search" id="searchBox">
+                    <input type="submit" id="searchButton">
+                </form>
+            </li>
             <li><a href="{{ path('articles_list') }}">Liste d'articles</a></li>
-            <li><a href="{{ path('poker') }}">Poker</a></li>
+
         </ul>
     </nav>
 </header>
+
+{% block main %}
+
+<main>
+
+</main>
+
+{% endblock main %}
+
+<footer>
+    <p>Copyright by Dydou</p>
+
+</footer>
 
 </body>
 </html>

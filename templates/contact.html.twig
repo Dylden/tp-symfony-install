@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block metatitle %}
+    Contact | Site trop cool
+{% endblock metatitle %}
+
+{% block main %}
+
+    <h2>Contactez-moi</h2>
+
+    <form method="post">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="Nom">
+
+        <label for="message">Message</label>
+        <input type="text" name="message" id="message" placeholder="Message">
+
+        <input type="submit">
+    </form>
+
+    {% if(name is not null and message is not null) %}
+
+    <p>{{ name }}, votre message a bien été envoyé !</p>
+        <p>Votre message : {{ message }}</p>
+
+    {% endif %}
+
+
+{% endblock main %}
