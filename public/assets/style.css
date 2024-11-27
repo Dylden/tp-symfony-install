@@ -85,21 +85,29 @@ a:hover{
     color: pink;
 }
 
+img{
+    width: 100%;
+}
+
+.image{
+    width: 100%;
+}
+
 .articles-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
-
 }
 
 .article-container {
     text-align: center;
-    width: 25%;
+    width: 20%;
     color: white;
     font-size: 40px;
     border: 2px solid orange;
     background: linear-gradient(180deg, royalblue, darkred, coral, yellowgreen, violet);
     overflow-x: hidden;
+
 }
 
 footer{
