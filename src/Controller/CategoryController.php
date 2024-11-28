@@ -28,7 +28,7 @@ public function category(CategoryRepository $categoryRepository): Response{
 //Fonction qui permet de trouver l'article que l'on met en id dans l'url.
 public function showCategory(CategoryRepository $categoryRepository, int $id): Response{
 
-        //Va cercher l'id de l'article indiqué dans la BDD
+        //Va chercher l'article par rapport à l'ID indiqué dans la BDD
         $categoryFound = $categoryRepository->find($id);
 
         //Si l'id ne correspond à aucun article, me redirige dans ma page d'erreur
