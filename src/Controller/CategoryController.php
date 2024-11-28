@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,4 +42,26 @@ public function showCategory(CategoryRepository $categoryRepository, int $id): R
         'category' => $categoryFound
     ]);
 }
+
+    #[Route('/category/create', 'create_category')]
+    public function createCategory(EntityManagerInterface $entityManager): Response
+    {
+        //Je créé une instance de l'entité Category
+        $category = new Category();
+
+        //Méthode set permet de remplir les propriétés de ma nouvelle catégorie
+        $category->setTitle('Numérique');
+        $category->setColor('orange');
+
+        //EntityManager permet de sauvegarder ou supprimer une catégorie en BDD
+
+        //persist pré-sauvegarde mes entités
+        $entityManager->persist($category);
+
+        //flush permet d'exécuter la requête SQL dans la BDD
+        $entityManager->flush();
+
+        return new Response('OK');
+
+    }
 }
