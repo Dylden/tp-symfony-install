@@ -61,7 +61,8 @@ public function showCategory(CategoryRepository $categoryRepository, int $id): R
         //flush permet d'exécuter la requête SQL dans la BDD
         $entityManager->flush();
 
-        return new Response('OK');
+        return $this->render('category_create.html.twig', [
+            'category' => $category]);
 
     }
 }
