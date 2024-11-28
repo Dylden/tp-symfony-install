@@ -95,15 +95,15 @@ img{
 
 .articles-container {
     display: flex;
-    justify-content: space-around;
+
     flex-wrap: wrap;
 }
 
 .article-container {
     text-align: center;
-    width: 20%;
+    width: 14.2%;
     color: white;
-    font-size: 40px;
+    font-size: 15px;
     border: 2px solid orange;
     background: linear-gradient(180deg, royalblue, darkred, coral, yellowgreen, violet);
     overflow-x: hidden;

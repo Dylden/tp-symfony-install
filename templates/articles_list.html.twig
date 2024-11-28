@@ -14,7 +14,7 @@
             <article class="article-container">
                 <p>{{ article.title }}</p>
                 <p>{{ article.content }}</p>
-                <div class="image"><img src="https://static.vecteezy.com/system/resources/thumbnails/012/176/986/small_2x/a-3d-rendering-image-of-grassed-hill-nature-scenery-png.png"></div>
+                <div class="image"><img src="{{ article.image }}"></div>
             <a href="{{ path('article_show', {id: article.id}) }}">Voir l'article</a>
 
 

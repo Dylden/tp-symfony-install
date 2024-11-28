@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block metatitle %}
+    Catégories | Site trop cool
+{% endblock metatitle %}
+
+{% block main %}
+    <h1>Catégories</h1>
+
+
+    {% for category in categories %}
+
+    <p>{{ category.title }}</p>
+    <p>{{ category.color }}</p>
+
+    {% endfor %}
+
+{% endblock main %}
