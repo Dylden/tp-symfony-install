@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,6 +64,48 @@ public function showCategory(CategoryRepository $categoryRepository, int $id): R
 
         return $this->render('category_create.html.twig', [
             'category' => $category]);
+
+    }
+
+    #[Route('/category/delete/{id}', 'delete_category', ['id' => '\d+'])]
+    public function removeCategory(int $id, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository): Response{
+
+        //Permet de trouver la catégorie par son id
+        $category = $categoryRepository->find($id);
+
+        //Si l'id n'est pas valide : renvoie à la page d'erreur
+        if(!$categoryRepository->find($id)){
+            return $this->redirectToRoute('not_found');
+        }
+
+        //Prépare à la suppression de la catégorie
+        $entityManager->remove($category);
+        //exécute la requête SQL de suppression de la catégorie
+        $entityManager->flush();
+
+        return $this->render('category_delete.html.twig', [
+            'category' => $category]);
+    }
+
+    #[Route('category/update/{id}', 'update_category', ['id' => '\d+'])]
+    public function updateCategory(int $id, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager){
+
+        //Je récupère ma catégorie par son id dans la BDD
+        $category = $categoryRepository->find($id);
+
+        //Je modifie les propriétés de l'instance de la catégorie avec la méthode set
+        $category->setTitle('Catégorie 4 MAJ');
+        $category->setColor('Couleur catégorie MAJ');
+
+        //ré-enregistrement de la catégorie en BDD
+        $entityManager->persist($category);
+
+        //Exécution de la requête SQL
+        $entityManager->flush();
+
+        return $this->render('category_update.html.twig', [
+            'category'=> $category]);
+
 
     }
 }

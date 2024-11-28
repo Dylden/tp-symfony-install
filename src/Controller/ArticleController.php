@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
-use Doctrine\ORM\EntityManagerInterface;
 
+use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -93,22 +93,48 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/delete/{id}', 'delete_article', ['id' => '\d+'])]
-    public function removeArticle(int $id, EntityManagerInterface $entityManager, ArticleRepository $articleRepository): Response{
+    public function removeArticle(int $id, EntityManagerInterface $entityManager, ArticleRepository $articleRepository): Response
+    {
 
         //Permet de trouver l'article par son id
         $article = $articleRepository->find($id);
 
-       //Si l'id n'est pas valide : renvoie à la page d'erreur
-       if(!$articleRepository->find($id)){
-           return $this->redirectToRoute('not_found');
-       }
+        //Si l'id n'est pas valide : renvoie à la page d'erreur
+        if (!$articleRepository->find($id)) {
+            return $this->redirectToRoute('not_found');
+        }
 
-       //Prépare à la suppression de l'article
-       $entityManager->remove($article);
-       //exécute la requête SQL de suppression de l'article
-       $entityManager->flush();
+        //Prépare à la suppression de l'article
+        $entityManager->remove($article);
+        //exécute la requête SQL de suppression de l'article
+        $entityManager->flush();
 
         return $this->render('articles_delete.html.twig', [
             'article' => $article]);
-}
+    }
+
+    #[Route('article/update/{id}', 'update_article', ['id' => '\d+'])]
+    public function updateArticle(int $id, ArticleRepository $articleRepository, EntityManagerInterface $entityManager)
+    {
+        //Je récupère mon article par son id dans la BDD
+
+        $article = $articleRepository->find($id);
+
+        //Je modifie les propriétés de l'instance de l'article avec la méthode set
+
+        $article->setTitle('Article 5 MAJ');
+        $article->setContent('Contenu article MAJ');
+
+        //ré-enregistrement de l'article en BDD
+
+        $entityManager->persist($article);
+
+        //Exécution de la requête SQL
+        $entityManager->flush();
+
+        return $this->render('article_update.html.twig', [
+            'article' => $article]);
+
+
+    }
 }
