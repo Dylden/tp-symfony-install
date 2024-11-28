@@ -13,5 +13,9 @@
         <p>{{ category.title }}</p>
         <p>{{ category.color }}</p>
 
-
+    <ul>
+        <li><a href="{{ path('categories', {id: article.id}) }}">Voir la catégorie</a></li>
+        <li><a href="{{ path('delete_category', {id: article.id}) }}"> Supprimer la catégorie </a> </li>
+        <li><a href="{{ path('category_update', {id: article.id}) }}"> Mettre à jour la catégorie </a> </li>
+    </ul>
 {% endblock main %}
