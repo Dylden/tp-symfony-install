@@ -91,4 +91,24 @@ class ArticleController extends AbstractController
             'article' => $article]);
 
     }
+
+    #[Route('/article/delete/{id}', 'delete_article', ['id' => '\d+'])]
+    public function removeArticle(int $id, EntityManagerInterface $entityManager, ArticleRepository $articleRepository): Response{
+
+        //Permet de trouver l'article par son id
+        $article = $articleRepository->find($id);
+
+       //Si l'id n'est pas valide : renvoie à la page d'erreur
+       if(!$articleRepository->find($id)){
+           return $this->redirectToRoute('not_found');
+       }
+
+       //Prépare à la suppression de l'article
+       $entityManager->remove($article);
+       //exécute la requête SQL de suppression de l'article
+       $entityManager->flush();
+
+        return $this->render('articles_delete.html.twig', [
+            'article' => $article]);
+}
 }
