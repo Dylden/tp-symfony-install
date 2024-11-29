@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Article;
+use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,35 +70,17 @@ class ArticleController extends AbstractController
     #[Route('/article/create', 'create_article')]
     public function createArticle(Request $request, EntityManagerInterface $entityManager): Response
     {
-
-        if ($request->isMethod('POST')) {
             //Je créé une instance de l'entité Article
             $article = new Article();
 
-            //On récupère les données du formulaire
-            $title = $request->request->get('title');
-            $content = $request->request->get('content');
-            $image = $request->files->get('image');
+            //La méthode form permet de créer un formulaire pour le nouvel article
+            $form = $this->createForm(ArticleType::class, $article);
 
-            //Méthode set permet de remplir les propriétés de mon nouvel article
-            $article->setTitle($title);
-            $article->setContent($content);
-            $article->setImage($image);
-            $article->setCreatedAt(new \DateTime());
+            //Je créer une view pour ce formulaire
+            $formView = $form->createView();
 
-
-            //EntityManager permet de sauvegarder ou supprimer un article en BDD
-
-            //persist pré-sauvegarde mes entités
-            $entityManager->persist($article);
-
-            //flush permet d'exécuter la requête SQL dans la BDD
-            $entityManager->flush();
             return $this->render('articles_create.html.twig', [
-                'article' => $article]);
-
-        }
-        return $this->render('articles_create.html.twig');
+                'formView' => $formView]);
 
     }
 
