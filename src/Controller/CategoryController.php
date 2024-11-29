@@ -95,25 +95,33 @@ public function showCategory(CategoryRepository $categoryRepository, int $id): R
     }
 
     #[Route('category/update/{id}', 'update_category', ['id' => '\d+'])]
-    public function updateCategory(int $id, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager){
+    public function updateCategory(int $id, Request $request, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager){
 
         
         //Je récupère ma catégorie par son id dans la BDD
         $category = $categoryRepository->find($id);
+        if($request->isMethod('POST')) {
 
-        //Je modifie les propriétés de l'instance de la catégorie avec la méthode set
-        $category->setTitle('Catégorie 4 MAJ');
-        $category->setColor('Couleur catégorie MAJ');
+            //On récupère les données du formulaire
+            //Ce formulaire contient les données de l'article sélectionné
+            $title = $request->request->get('title');
+            $color = $request->request->get('color');
 
-        //ré-enregistrement de la catégorie en BDD
-        $entityManager->persist($category);
+            //Je modifie les propriétés de l'instance de la catégorie avec la méthode set
+            $category->setTitle($title);
+            $category->setColor($color);
 
-        //Exécution de la requête SQL
-        $entityManager->flush();
+            //ré-enregistrement de la catégorie en BDD
+            $entityManager->persist($category);
 
+            //Exécution de la requête SQL
+            $entityManager->flush();
+
+            return $this->render('category_update.html.twig', [
+                'category' => $category]);
+
+        }
         return $this->render('category_update.html.twig', [
-            'category'=> $category]);
-
-
+            'category' => $category]);
     }
 }
