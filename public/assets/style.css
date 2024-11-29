@@ -104,12 +104,13 @@ img{
 
 .article-container {
     text-align: center;
+    text-shadow: rgba(255,166,126,0.5) 2px 2px 2px;
     width: 14.2%;
-    color: white;
+    color: black;
     font-size: 15px;
-    border: 2px solid orange;
-    background: linear-gradient(180deg, royalblue, darkred, coral, yellowgreen, violet);
-    overflow-x: hidden;
+    border-radius: 10px;
+    backdrop-filter:blur(10px);
+    background: rgba(255, 255, 255, 0.3);    overflow-x: hidden;
 
 
 }
@@ -121,6 +122,10 @@ img{
     border-radius: 10px;
     padding: 10px;
 
+}
+
+#liste li{
+    align-items: end;
 }
 
 #liste li a{

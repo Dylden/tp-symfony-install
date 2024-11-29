@@ -70,17 +70,30 @@ class ArticleController extends AbstractController
     #[Route('/article/create', 'create_article')]
     public function createArticle(Request $request, EntityManagerInterface $entityManager): Response
     {
-            //Je créé une instance de l'entité Article
-            $article = new Article();
+        //Je créé une instance de l'entité Article
+        $article = new Article();
 
-            //La méthode form permet de créer un formulaire pour le nouvel article
-            $form = $this->createForm(ArticleType::class, $article);
+        //La méthode form permet de créer un formulaire pour le nouvel article
+        $form = $this->createForm(ArticleType::class, $article);
 
-            //Je créer une view pour ce formulaire
-            $formView = $form->createView();
+        //Je demande au form de Symfony de récupérer données de la requête
+        //+ de remplir automatiquement l'entité avec
+        //donc de récupérer données de chaque input
+        //+ les stocker dans les propriétés de l'entité (setTitle() etc)
+        $form->handleRequest($request);
 
-            return $this->render('articles_create.html.twig', [
-                'formView' => $formView]);
+        if($form->isSubmitted()) {
+            //Je met automatiquement la date de création de l'article
+            $article->setCreatedAt(new \DateTime());
+            $entityManager->persist($article);
+            $entityManager->flush();
+        }
+
+        //Je créer une view pour ce formulaire
+        $formView = $form->createView();
+
+        return $this->render('articles_create.html.twig', [
+            'formView' => $formView]);
 
     }
 
@@ -106,40 +119,34 @@ class ArticleController extends AbstractController
     }
 
     #[Route('article/update/{id}', 'update_article', ['id' => '\d+'])]
-    public function updateArticle(int $id, Request $request,ArticleRepository $articleRepository, EntityManagerInterface $entityManager)
+    public function updateArticle(int $id, Request $request, ArticleRepository $articleRepository, EntityManagerInterface $entityManager)
     {
         //Je récupère mon article par son id dans la BDD
 
         $article = $articleRepository->find($id);
 
-        $message = "Veuillez remplir les champs";
-        //Je modifie les propriétés de l'instance de l'article avec la méthode set
+        //La méthode form permet de créer un formulaire pour le nouvel article
+        $form = $this->createForm(ArticleType::class, $article);
 
-        if($request->isMethod('POST')) {
+        //Je demande au form de Symfony de récupérer données de la requête
+        //+ de remplir automatiquement l'entité avec
+        //donc de récupérer données de chaque input
+        //+ les stocker dans les propriétés de l'entité (setTitle() etc)
+        $form->handleRequest($request);
 
-            //On récupère les données du formulaire
-            //Ce formulaire contient les données de l'article sélectionné
-            $title = $request->request->get('title');
-            $content = $request->request->get('content');
-            $image = $request->request->get('image');
-
-            //On modifie les données de l'article
-            $article->setTitle($title);
-            $article->setContent($content);
-            $article->setImage($image);
-
-            //ré-enregistrement de l'article en BDD
-
+        if($form->isSubmitted()) {
+            //Je met automatiquement la date de création de l'article
+            $article->setCreatedAt(new \DateTime());
             $entityManager->persist($article);
-
-            //Exécution de la requête SQL
             $entityManager->flush();
-
-            return $this->render('article_update.html.twig', [
-                'article' => $article]);
         }
+
+        //Je créer une view pour ce formulaire
+        $formView = $form->createView();
+
         return $this->render('article_update.html.twig', [
-            'article' => $article]);
+            'formView' => $formView,
+            'article'=> $article]);
 
 
     }
