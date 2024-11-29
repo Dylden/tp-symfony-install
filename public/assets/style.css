@@ -5,7 +5,7 @@
 }
 
 body {
-    background: linear-gradient(90deg, royalblue, greenyellow, orange);
+    background: linear-gradient(90deg, royalblue, greenyellow);
     scroll-behavior: smooth;
 }
 
@@ -76,7 +76,7 @@ ul{
 
 a{
     text-decoration: none;
-    font-size: 40px;
+    font-size: 30px;
     color: deeppink;
     font-style: italic;
 }
@@ -95,8 +95,11 @@ img{
 
 .articles-container {
     display: flex;
-
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 60px;
+    border-radius: 10px;
+
 }
 
 .article-container {
@@ -108,16 +111,45 @@ img{
     background: linear-gradient(180deg, royalblue, darkred, coral, yellowgreen, violet);
     overflow-x: hidden;
 
+
 }
 #liste{
     display: flex;
     flex-direction: column;
     backdrop-filter:blur(10px);
     background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+
 }
 
 #liste li a{
     font-size: 15px;
+
+}
+
+#categoriesContainer{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+
+
+}
+#categoryContainer{
+    font-size: 30px;
+    align-items: center;
+    backdrop-filter:blur(10px);
+    background: rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    transition: 1s;
+}
+
+#categoryContainer:hover{
+    padding: 30px;
+    height: auto;
+    transition: 1s;
 }
 
 footer{

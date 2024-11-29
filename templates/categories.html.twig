@@ -7,12 +7,18 @@
 {% block main %}
     <h1>Catégories</h1>
 
-
+    <section id="categoriesContainer">
     {% for category in categories %}
 
-    <p>{{ category.title }}</p>
-    <p>{{ category.color }}</p>
+            <div id="categoryContainer">
+                <p>{{ category.title }}</p>
+                <p>{{ category.color }}</p>
+            </div>
+
+
+
 
     {% endfor %}
+    </section>
 
 {% endblock main %}

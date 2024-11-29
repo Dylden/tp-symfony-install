@@ -123,24 +123,38 @@ class ArticleController extends AbstractController
     }
 
     #[Route('article/update/{id}', 'update_article', ['id' => '\d+'])]
-    public function updateArticle(int $id, ArticleRepository $articleRepository, EntityManagerInterface $entityManager)
+    public function updateArticle(int $id, Request $request,ArticleRepository $articleRepository, EntityManagerInterface $entityManager)
     {
         //Je récupère mon article par son id dans la BDD
 
         $article = $articleRepository->find($id);
 
+        $message = "Veuillez remplir les champs";
         //Je modifie les propriétés de l'instance de l'article avec la méthode set
 
-        $article->setTitle('Article 5 MAJ');
-        $article->setContent('Contenu article MAJ');
+        if($request->isMethod('POST')) {
 
-        //ré-enregistrement de l'article en BDD
+            //On récupère les données du formulaire
+            //Ce formulaire contient les données de l'article sélectionné
+            $title = $request->request->get('title');
+            $content = $request->request->get('content');
+            $image = $request->request->get('image');
 
-        $entityManager->persist($article);
+            //On modifie les données de l'article
+            $article->setTitle($title);
+            $article->setContent($content);
+            $article->setImage($image);
 
-        //Exécution de la requête SQL
-        $entityManager->flush();
+            //ré-enregistrement de l'article en BDD
 
+            $entityManager->persist($article);
+
+            //Exécution de la requête SQL
+            $entityManager->flush();
+
+            return $this->render('article_update.html.twig', [
+                'article' => $article]);
+        }
         return $this->render('article_update.html.twig', [
             'article' => $article]);
 

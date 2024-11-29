@@ -5,5 +5,20 @@
 {% endblock metatitle %}
 
 {% block main %}
-    <h1>Votre article a été update !</h1>
-{% endblock main %}
+    <section>
+        <h1>Créer un article</h1>
+
+        <form method="post">
+            <label for="title">Title</label>
+            <input type="text" name="title" placeholder="title" value="{{ article.title }}" required>
+
+            <label for="content">Content</label>
+            <input type="text" name="content" placeholder="content" value="{{ article.content }}" required>
+
+            <label for="image">Image</label>
+            <input type="text" name="image" placeholder="image" value="{{ article.image }}">
+
+            <input type="submit">
+
+        </form>
+    </section>{% endblock main %}
