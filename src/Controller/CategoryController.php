@@ -8,6 +8,7 @@ use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -45,25 +46,31 @@ public function showCategory(CategoryRepository $categoryRepository, int $id): R
 }
 
     #[Route('/category/create', 'create_category')]
-    public function createCategory(EntityManagerInterface $entityManager): Response
+    public function createCategory(Request $request, EntityManagerInterface $entityManager): Response
     {
-        //Je créé une instance de l'entité Category
-        $category = new Category();
+        if($request->isMethod('POST')) {
+            //Je créé une instance de l'entité Category
+            $category = new Category();
 
-        //Méthode set permet de remplir les propriétés de ma nouvelle catégorie
-        $category->setTitle('Numérique');
-        $category->setColor('orange');
+            //Je récupère les données de mon formulaire
+            $title = $request->request->get('title');
+            $color = $request->request->get('color');
+            //Méthode set permet de remplir les propriétés de ma nouvelle catégorie
+            $category->setTitle($title);
+            $category->setColor($color);
 
-        //EntityManager permet de sauvegarder ou supprimer une catégorie en BDD
+            //EntityManager permet de sauvegarder ou supprimer une catégorie en BDD
 
-        //persist pré-sauvegarde mes entités
-        $entityManager->persist($category);
+            //persist pré-sauvegarde mes entités
+            $entityManager->persist($category);
 
-        //flush permet d'exécuter la requête SQL dans la BDD
-        $entityManager->flush();
+            //flush permet d'exécuter la requête SQL dans la BDD
+            $entityManager->flush();
 
-        return $this->render('category_create.html.twig', [
-            'category' => $category]);
+            return $this->render('category_create.html.twig', [
+                'category' => $category]);
+        }
+        return $this->render('category_create.html.twig');
 
     }
 
