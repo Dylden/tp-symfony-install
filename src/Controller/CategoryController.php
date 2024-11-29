@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Form\ArticleType;
+use App\Form\CategoryType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -48,30 +50,29 @@ public function showCategory(CategoryRepository $categoryRepository, int $id): R
     #[Route('/category/create', 'create_category')]
     public function createCategory(Request $request, EntityManagerInterface $entityManager): Response
     {
-        if($request->isMethod('POST')) {
             //Je créé une instance de l'entité Category
             $category = new Category();
 
-            //Je récupère les données de mon formulaire
-            $title = $request->request->get('title');
-            $color = $request->request->get('color');
-            //Méthode set permet de remplir les propriétés de ma nouvelle catégorie
-            $category->setTitle($title);
-            $category->setColor($color);
+            //La méthode form permet de créer un formulaire pour la nouvelle catégorie
+            $form = $this->createForm(CategoryType::class, $category);
 
-            //EntityManager permet de sauvegarder ou supprimer une catégorie en BDD
+            //Je demande au form de Symfony de récupérer données de la requête
+            //+ de remplir automatiquement l'entité avec
+            //donc de récupérer données de chaque input
+            //+ les stocker dans les propriétés de l'entité (setTitle() etc)
+            $form->handleRequest($request);
 
-            //persist pré-sauvegarde mes entités
-            $entityManager->persist($category);
+            if ($form->isSubmitted()) {
+                //Je met automatiquement la date de création de la catégorie
+                $entityManager->persist($category);
+                $entityManager->flush();
+            }
 
-            //flush permet d'exécuter la requête SQL dans la BDD
-            $entityManager->flush();
+            //Je créer une view pour ce formulaire
+            $formView = $form->createView();
 
             return $this->render('category_create.html.twig', [
-                'category' => $category]);
-        }
-        return $this->render('category_create.html.twig');
-
+                'formView' => $formView]);
     }
 
     #[Route('/category/delete/{id}', 'delete_category', ['id' => '\d+'])]
@@ -100,28 +101,25 @@ public function showCategory(CategoryRepository $categoryRepository, int $id): R
         
         //Je récupère ma catégorie par son id dans la BDD
         $category = $categoryRepository->find($id);
-        if($request->isMethod('POST')) {
+        //La méthode form permet de créer un formulaire pour la nouvelle catégorie
+        $form = $this->createForm(CategoryType::class, $category);
 
-            //On récupère les données du formulaire
-            //Ce formulaire contient les données de l'article sélectionné
-            $title = $request->request->get('title');
-            $color = $request->request->get('color');
+        //Je demande au form de Symfony de récupérer données de la requête
+        //+ de remplir automatiquement l'entité avec
+        //donc de récupérer données de chaque input
+        //+ les stocker dans les propriétés de l'entité (setTitle() etc)
+        $form->handleRequest($request);
 
-            //Je modifie les propriétés de l'instance de la catégorie avec la méthode set
-            $category->setTitle($title);
-            $category->setColor($color);
-
-            //ré-enregistrement de la catégorie en BDD
+        if ($form->isSubmitted()) {
+            //Je met automatiquement la date de création de la catégorie
             $entityManager->persist($category);
-
-            //Exécution de la requête SQL
             $entityManager->flush();
-
-            return $this->render('category_update.html.twig', [
-                'category' => $category]);
-
         }
-        return $this->render('category_update.html.twig', [
-            'category' => $category]);
+
+        //Je créer une view pour ce formulaire
+        $formView = $form->createView();
+
+        return $this->render('category_create.html.twig', [
+            'formView' => $formView]);
     }
 }

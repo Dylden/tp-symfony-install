@@ -5,12 +5,7 @@
 {% endblock metatitle %}
 
 {% block main %}
-    <form method="post">
-        <label for="title">Title</label>
-        <input type="text" name="title" placeholder="title" value="{{ category.title }}" required>
 
-        <label for="color">color</label>
-        <input type="text" name="color" placeholder="content" value="{{ category.color }}" required>
+    {{ form(formView) }}
 
-        <input type="submit">
 {% endblock main %}

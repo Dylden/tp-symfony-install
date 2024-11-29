@@ -8,14 +8,5 @@
     <section>
         <h1>Créer une catégorie</h1>
 
-        <form method="post">
-            <label for="title">Title</label>
-            <input type="text" name="title" placeholder="title" required>
-
-            <label for="color">color</label>
-            <input type="text" name="color" placeholder="content" required>
-
-            <input type="submit">
-
-        </form>
+        {{ form(formView) }}
     </section>{% endblock main %}
