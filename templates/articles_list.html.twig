@@ -6,7 +6,9 @@
 
 
 {% block main %}
-    <h1>Liste d'articles</h1>
+
+
+    <h2>Liste d'articles</h2>
 
     <section class="articles-container">
         {% for article in articles %}
@@ -15,16 +17,21 @@
                 <p>{{ article.title }}</p>
                 <p>{{ article.content }}</p>
                 <div class="image"><img src="{{ article.image }}"></div>
-                <ul>
-                    <li><a href="{{ path('article_show', {id: article.id}) }}">Voir l'article</a></li>
-                    <li><a href="{{ path('delete_article', {id: article.id}) }}"> Supprimer l'article </a> </li>
-                    <li><a href="{{ path('update_article', {id: article.id}) }}"> Mettre à jour l'article </a> </li>
-                </ul>
+
 
 
             </article>
+            <ul id="liste">
+                <li><a href="{{ path('article_show', {id: article.id}) }}">Voir l'article</a></li>
+                <li><a href="{{ path('delete_article', {id: article.id}) }}"> Supprimer l'article </a></li>
+                <li><a href="{{ path('update_article', {id: article.id}) }}"> Mettre à jour l'article </a></li>
+            </ul>
+
+
 
         {% endfor %}
     </section>
+
+
 
 {% endblock main %}

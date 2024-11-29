@@ -90,6 +90,7 @@ public function showCategory(CategoryRepository $categoryRepository, int $id): R
     #[Route('category/update/{id}', 'update_category', ['id' => '\d+'])]
     public function updateCategory(int $id, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager){
 
+        
         //Je récupère ma catégorie par son id dans la BDD
         $category = $categoryRepository->find($id);
 

@@ -67,28 +67,37 @@ class ArticleController extends AbstractController
 
     //Fonction pour créer un article
     #[Route('/article/create', 'create_article')]
-    public function createArticle(EntityManagerInterface $entityManager): Response
+    public function createArticle(Request $request, EntityManagerInterface $entityManager): Response
     {
-        //Je créé une instance de l'entité Article
-        $article = new Article();
 
-        //Méthode set permet de remplir les propriétés de mon nouvel article
-        $article->setTitle('Article 5');
-        $article->setContent('Ceci est un article nouveau');
-        $article->setImage('https://gratisography.com/wp-content/uploads/2024/10/gratisography-cool-cat-800x525.jpg');
-        $article->setCreatedAt(new \DateTime());
+        if ($request->isMethod('POST')) {
+            //Je créé une instance de l'entité Article
+            $article = new Article();
+
+            //On récupère les données du formulaire
+            $title = $request->request->get('title');
+            $content = $request->request->get('content');
+            $image = $request->files->get('image');
+
+            //Méthode set permet de remplir les propriétés de mon nouvel article
+            $article->setTitle($title);
+            $article->setContent($content);
+            $article->setImage($image);
+            $article->setCreatedAt(new \DateTime());
 
 
-        //EntityManager permet de sauvegarder ou supprimer un article en BDD
+            //EntityManager permet de sauvegarder ou supprimer un article en BDD
 
-        //persist pré-sauvegarde mes entités
-        $entityManager->persist($article);
+            //persist pré-sauvegarde mes entités
+            $entityManager->persist($article);
 
-        //flush permet d'exécuter la requête SQL dans la BDD
-        $entityManager->flush();
+            //flush permet d'exécuter la requête SQL dans la BDD
+            $entityManager->flush();
+            return $this->render('articles_create.html.twig', [
+                'article' => $article]);
 
-        return $this->render('articles_create.html.twig', [
-            'article' => $article]);
+        }
+        return $this->render('articles_create.html.twig');
 
     }
 
